@@ -28,6 +28,7 @@
   justify-content: center;
   scroll-snap-align: start;
   scroll-snap-stop: always;
+  margin: 0; /* Remove any margins */
 }
 
 .product-image {
@@ -47,8 +48,8 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-  padding: 120px 40px 40px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  padding: 100px 40px 80px;
   color: white;
   transform: translateY(0);
   transition: transform 0.3s ease;
@@ -100,28 +101,38 @@
 }
 
 .btn-purchase {
-  background: #000000;
+  background: rgba(0, 0, 0, 0.9);
   color: white;
-  border: 2px solid #000000;
-  padding: 20px 40px;
-  font-size: 18px;
-  font-weight: 700;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   border-radius: 50px;
   transition: all 0.3s ease;
   position: absolute;
-  bottom: 40px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   z-index: 10;
   cursor: pointer;
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.product-slide:hover .btn-purchase {
+  opacity: 1;
+  pointer-events: all;
+  transform: translate(-50%, -50%) scale(1.05);
 }
 
 .btn-purchase:hover {
-  background: #333333;
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 1);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
 }
 
 /* Progress Indicator */
@@ -200,84 +211,91 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .product-feed-container {
-    height: calc(100vh - 70px); /* Slightly less for mobile navbar */
-    margin-top: 70px;
+    height: calc(100vh - 80px);
+    margin-top: 80px;
   }
-  
+
   .product-feed-container.with-filters {
-    height: calc(100vh - 180px);
-    margin-top: 180px;
+    height: calc(100vh - 200px);
+    margin-top: 200px;
   }
-  
+
   .product-slide {
     height: 100vh;
   }
-  
+
   .product-overlay {
-    padding: 80px 20px 30px;
+    padding: 80px 20px 60px;
   }
-  
+
   .product-name {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
-  
+
   .product-price {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
-  
+
   .btn-purchase {
-    padding: 16px 32px;
-    font-size: 16px;
-    bottom: 30px;
+    padding: 14px 28px;
+    font-size: 14px;
+    opacity: 1; /* Always visible on mobile */
+    pointer-events: all;
   }
-  
+
   .progress-indicator {
     top: 90px;
     right: 15px;
   }
-  
+
   .progress-bar {
     height: 150px;
   }
-  
+
   .no-products h2 {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
-  
+
   .loading,
   .no-products {
-    min-height: calc(100vh - 70px);
-    margin-top: 70px;
+    min-height: calc(100vh - 80px);
+    margin-top: 80px;
   }
 }
 
 @media (max-width: 480px) {
   .product-name {
-    font-size: 1.5rem;
+    font-size: 1.75rem;
   }
-  
+
   .product-price {
     font-size: 1.1rem;
   }
-  
+
   .product-overlay {
-    padding: 60px 15px 25px;
+    padding: 60px 16px 50px;
   }
-  
+
   .progress-indicator {
-    display: none; /* Hide on very small screens */
+    top: 85px;
+    right: 10px;
   }
-  
+
+  .progress-bar {
+    height: 120px;
+  }
+
   .no-products h2 {
-    font-size: 1.3rem;
+    font-size: 1.5rem;
   }
 }
 
 /* Custom scrollbar */
 .product-feed-container::-webkit-scrollbar {
-  width: 0px;
+  display: none;
 }
 
 .product-feed-container {
+  -ms-overflow-style: none;
   scrollbar-width: none;
 } 
