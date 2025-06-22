@@ -107,8 +107,9 @@ const ProductFeed = ({ products: propProducts, showFilters = false }) => {
             <button 
               className="btn-purchase"
               onClick={() => handlePurchase(product)}
+              aria-label={`Purchase ${product.name}`}
             >
-              Purchase
+              Purchase Now
             </button>
           </div>
         ))}
@@ -119,7 +120,7 @@ const ProductFeed = ({ products: propProducts, showFilters = false }) => {
         <div className="progress-bar">
           <div 
             className="progress-fill"
-            style={{ width: `${((currentIndex + 1) / products.length) * 100}%` }}
+            style={{ height: `${((currentIndex + 1) / products.length) * 100}%` }}
           ></div>
         </div>
         <div className="progress-text">
