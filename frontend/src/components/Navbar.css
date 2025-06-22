@@ -1,0 +1,166 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 16px 0;
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.navbar-brand {
+  text-decoration: none;
+}
+
+.brand-text {
+  font-family: 'Ballet', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 1px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-link:hover {
+  color: #666666;
+}
+
+.navbar-link.active {
+  color: #000000;
+}
+
+.navbar-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #000000;
+}
+
+.navbar-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.hamburger {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: #1a1a1a;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.hamburger::before,
+.hamburger::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 2px;
+  background: #1a1a1a;
+  transition: all 0.3s ease;
+}
+
+.hamburger::before {
+  top: -8px;
+}
+
+.hamburger::after {
+  bottom: -8px;
+}
+
+.hamburger.open {
+  background: transparent;
+}
+
+.hamburger.open::before {
+  transform: rotate(45deg);
+  top: 0;
+}
+
+.hamburger.open::after {
+  transform: rotate(-45deg);
+  bottom: 0;
+}
+
+.navbar-mobile {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  flex-direction: column;
+  gap: 16px;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar-mobile.open {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .navbar .container {
+    padding: 0 20px;
+  }
+  
+  .navbar-menu {
+    display: none;
+  }
+  
+  .navbar-toggle {
+    display: block;
+  }
+  
+  .navbar-mobile {
+    display: flex;
+  }
+  
+  .navbar-link {
+    padding: 12px 16px;
+    border-radius: 8px;
+    width: 100%;
+    text-align: left;
+  }
+  
+  .brand-text {
+    font-size: 1.75rem;
+  }
+} 
