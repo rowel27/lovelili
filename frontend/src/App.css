@@ -1,0 +1,196 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #1a1a1a;
+  background-color: #ffffff;
+  overflow-x: hidden;
+}
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;
+  padding-top: 80px; /* Adjusted for fixed navbar */
+  padding-bottom: 60px; /* Adjusted for footer */
+}
+
+/* Container */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn-primary {
+  background: #000000;
+  color: white;
+  border: 2px solid #000000;
+}
+
+.btn-primary:hover {
+  background: #333333;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #000000;
+  border: 2px solid #000000;
+}
+
+.btn-secondary:hover {
+  background: #000000;
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Navigation */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+
+.navbar-brand {
+  text-decoration: none;
+}
+
+.brand-text {
+  font-family: 'Ballet', serif;
+  font-size: 2rem;
+  font-weight: 400;
+  color: #000000;
+  letter-spacing: 1px;
+}
+
+.navbar-menu {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.navbar-link {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-link:hover {
+  color: #666666;
+}
+
+.navbar-link.active {
+  color: #000000;
+}
+
+.navbar-link.active::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #000000;
+}
+
+/* Loading states */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-size: 18px;
+  color: #666666;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #000000;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+  }
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .navbar .container {
+    padding: 16px 20px;
+  }
+  
+  .navbar-menu {
+    gap: 20px;
+  }
+  
+  .brand-text {
+    font-size: 1.75rem;
+  }
+}
+
+/* Utility classes */
+.text-center {
+  text-align: center;
+}
+
+.mb-4 {
+  margin-bottom: 24px;
+}
+
+.mt-4 {
+  margin-top: 24px;
+}
+
+.hidden {
+  display: none;
+}
