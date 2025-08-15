@@ -9,14 +9,14 @@ const ProductFeed = ({ products: propProducts, showFilters = false }) => {
 
   useEffect(() => {
     if (propProducts) {
-      setProducts(propProducts);
+      setProducts(formatProducts(propProducts));
       setLoading(false);
     } else {
       const fetchProducts = async () => {
         try {
           setLoading(true);
           const response = await apiService.getProducts();
-          setProducts(response.data);
+          setProducts(formatProducts(response.data));
         } catch (error) {
           console.error('Error fetching products:', error);
         } finally {
@@ -26,6 +26,17 @@ const ProductFeed = ({ products: propProducts, showFilters = false }) => {
       fetchProducts();
     }
   }, [propProducts]);
+
+  const formatProducts = (data) => {
+    return data.map((p) => ({
+      id: p.id,
+      title: p.name || p.title,
+      image: p.imageUrl || p.image,
+      price: p.price,
+      compareAtPrice: p.compareAtPrice || null,
+      is_sold: p.is_sold === true,
+    }));
+  };
 
   if (loading) {
     return (
@@ -46,7 +57,7 @@ const ProductFeed = ({ products: propProducts, showFilters = false }) => {
   }
 
   return (
-    <div className={`product-feed-grid-container ${showFilters ? 'with-filters' : ''}`}> 
+    <div className={`product-feed-grid-container ${showFilters ? 'with-filters' : ''}`}>
       <div className="product-feed-grid">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
@@ -56,4 +67,4 @@ const ProductFeed = ({ products: propProducts, showFilters = false }) => {
   );
 };
 
-export default ProductFeed; 
+export default ProductFeed;

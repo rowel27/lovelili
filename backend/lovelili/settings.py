@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
-
+from environ import Env
+env = Env()
+env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -112,6 +114,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.4.46:3000",  # Network access
 ]
 
+
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
@@ -146,7 +150,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SITE_URL = 'http://localhost:8000'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51RlCbiPUQ407oy82x7OvlTkfTenPuFh0vaqzE0eYE19d7K3fI3K2QdEnIQq23pyhOyjT894nDFTobQcsAscxN4Xk006b358Zto'
-STRIPE_SECRET_KEY = 'SECRET_KEY'
-STRIPE_WEBHOOK_SECRET = 'WEBHOOK_SECRET_KEY'
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default="secret")
+STRIPE_WEBHOOK_SECRET = 'whsec_d2707b449b7d2405a83ced0a6e55c23606967a7f8616afdce34db8e62bb827f0'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

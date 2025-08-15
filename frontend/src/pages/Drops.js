@@ -54,12 +54,6 @@ const Drops = () => {
     });
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
 
   const getProductImage = (productName) => {
     // Generate placeholder images based on product name
@@ -160,7 +154,7 @@ const Drops = () => {
                       <div className="product-overlay">
                         <div className="product-info">
                           <h3>{product.name}</h3>
-                          <p className="product-price">{formatPrice(product.price)}</p>
+                          <p className="product-price">{product.price}</p>
                           <p className="product-description">
                             {product.description.length > 100 
                               ? `${product.description.substring(0, 100)}...` 

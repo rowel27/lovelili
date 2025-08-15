@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Drop, Category, Product, ProductImage
+from .models import *
 
 # Register your models here.
 
@@ -35,6 +35,7 @@ class DropAdmin(admin.ModelAdmin):
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 1
+    ordering = ['position']
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -43,6 +44,7 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name', 'description']
     ordering = ['-created_at']
     date_hierarchy = 'created_at'
+    inlines = [ProductImageInline]
     
     fieldsets = (
         ('Basic Information', {
@@ -75,4 +77,5 @@ admin.site.site_title = "LoveLili Admin Portal"
 admin.site.index_title = "Welcome to LoveLili Administration"
 
 admin.site.register(ProductImage)
+admin.site.register(UserPayment)
     

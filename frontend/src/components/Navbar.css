@@ -9,7 +9,17 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 16px 0;
 }
-
+.cart-link svg {
+  width: 10px;   /* smaller width */
+  height: 10px;  /* smaller height */
+  vertical-align: middle; /* align nicely with text */
+  margin-right: 6px; /* optional spacing between icon and number */
+}
+.cart-icon {
+  width: 27px;
+  height: 27px;
+  fill: #1a1a1a; /* dark color for the cart icon */
+}
 .navbar .container {
   display: flex;
   align-items: center;

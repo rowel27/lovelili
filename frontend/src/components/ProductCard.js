@@ -1,40 +1,38 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './ProductCard.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "./ProductCard.css";
+
 
 const ProductCard = ({ product }) => {
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
+  const navigate = useNavigate();
+  console.log(product)
+
+
+  const handleClick = () => {
+    navigate(`/products/${product.id}`);
   };
 
   return (
-    <Link to={`/products/${product.id}`} className="product-card-link">
-      <div className="product-card">
-        <div className="product-image">
-          {product.image ? (
-            <img 
-              src={product.image}
-              alt={product.name}
-              onError={(e) => {
-                e.target.src = 'https://via.placeholder.com/300x400?text=Product+Image';
-              }}
-            />
-          ) : (
-            <div className="placeholder-image">
-              <span>No Image</span>
-            </div>
-          )}
+    <div className="product-card-wrapper">
+      <div className="product-card" onClick={handleClick} style={{ cursor: "pointer" }}>
+        <div className={`product-image-wrapper ${product.is_sold ? "sold" : ""}`}>
+          <img
+            className="product-image"
+            src={product.image || "https://via.placeholder.com/500x500?text=No+Image"}
+            alt={product.name ||product || product.title}
+          />
+          {product.is_sold && <div className="sold-badge">Sold</div>}
+          
         </div>
-        <div className="product-info">
-          <h3 className="product-name">{product.name}</h3>
-          <p className="productprice">{formatPrice(product.price)}</p>
+
+        <div className="product-details">
+          <h4 className="product-title">{product.name || product.title}</h4>
+          <h4 className="product-price">${product.price}</h4>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
-export default ProductCard; 
+export default ProductCard;
+

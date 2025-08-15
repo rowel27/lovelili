@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { apiService } from '../services/api';
+import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 import './ProductDetail.css';
+
+
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -9,11 +13,24 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const {cart, addToCart } = useCart();
+  const isInCart = product ? cart.some(item => item.id === product.id) : false;
+  const navigate = useNavigate();
 
-  const HandleStripeCheckout = () => {
+/**const HandleStripeCheckout = () => {
     // Placeholder for now - add your checkout logic later
     console.log('Starting checkout for product:', product.id);
     // You can implement Stripe checkout logic here later
+  };
+**/
+
+
+  const handleCartClick = () => {
+    if (isInCart) {
+      navigate('/cart'); // Redirect to checkout page
+    } else {
+      addToCart(product);
+    }
   };
 
   useEffect(() => {
@@ -48,7 +65,7 @@ const ProductDetail = () => {
   };
   const allImages = getAllImages();
 
-  
+
 
   // Handlers for navigation
   const goToPrevImage = () => {
@@ -61,12 +78,6 @@ const ProductDetail = () => {
     setCurrentImageIndex(idx);
   };
 
-  const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(price);
-  };
 
   const formatDate = (dateString) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -169,7 +180,7 @@ const ProductDetail = () => {
           <div className="product-info-section">
             <div className="product-header">
               <h1>{product.name}</h1>
-              <div className="product-price">{formatPrice(product.price)}</div>
+              <div className="product-price">{product.price}</div>
             </div>
 
             <div className="product-meta">
@@ -201,16 +212,20 @@ const ProductDetail = () => {
               <h3>Description</h3>
               <p>{product.description}</p>
             </div>
+              <div className="product-actions">
+                <button
+                  className="btn btn-primary btn-large"
+                  onClick={handleCartClick}
+                  disabled={product.is_sold}
+                >
+                  {product.is_sold ? "Sold Out" :isInCart ? "Proceed to Checkout" : "Add to Cart"}
+                </button>
+              </div>
 
-            <div className="product-actions">
-              <button className="btn btn-primary btn-large" onClick={HandleStripeCheckout}>
-                Add to Cart
-              </button>
-            </div>
 
             <div className="product-status">
               {product.is_sold ? (
-                <div className="status-badge sold">Sold Out</div>
+                <div></div>
               ) : (
                 <div className="status-badge available">Available</div>
               )}

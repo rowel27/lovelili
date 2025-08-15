@@ -1,78 +1,65 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import './Navbar.css';
+import cartIcon from '../assets/cart-icon.png'; // or .svg
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { cart } = useCart();
 
   const isActive = (path) => location.pathname === path;
 
-  // Prevent body scroll when mobile menu is open
   useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    // Cleanup on unmount
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isMenuOpen]);
 
-  // Close menu when location changes
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleLinkClick = () => {
-    setIsMenuOpen(false);
-  };
-
   return (
     <nav className="navbar">
       <div className="container">
-        <Link to="/" className="navbar-brand" onClick={handleLinkClick}>
+        <Link to="/" className="navbar-brand" onClick={() => setIsMenuOpen(false)}>
           <span className="brand-text">LoveLiLi</span>
         </Link>
 
-        {/* Desktop Menu */}
-        <div className="navbar-menu">
-          <Link 
-            to="/" 
-            className={`navbar-link ${isActive('/') ? 'active' : ''}`}
-          >
-            Home
-          </Link>
-          <Link 
-            to="/products" 
-            className={`navbar-link ${isActive('/products') ? 'active' : ''}`}
-          >
-            Products
-          </Link>
-        </div>
+        <button
+          className={`navbar-toggle ${isMenuOpen ? 'open' : ''}`}
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          <span className="hamburger"></span>
+        </button>
 
-        {/* Mobile Menu */}
-        <div className={`navbar-mobile ${isMenuOpen ? 'open' : ''}`}>
-          <Link 
-            to="/" 
+        <div className={`navbar-menu ${isMenuOpen ? 'open' : ''}`}>
+          <Link
+            to="/"
             className={`navbar-link ${isActive('/') ? 'active' : ''}`}
-            onClick={handleLinkClick}
+            onClick={() => setIsMenuOpen(false)}
           >
             Home
           </Link>
-          <Link 
-            to="/products" 
+          <Link
+            to="/products"
             className={`navbar-link ${isActive('/products') ? 'active' : ''}`}
-            onClick={handleLinkClick}
+            onClick={() => setIsMenuOpen(false)}
           >
             Products
+          </Link>
+          <Link
+            to="/cart"
+            className="navbar-link cart-link"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Cart"
+          >
+            <img src={cartIcon} alt="Cart" className="cart-icon" />
+            {cart.length > 0 && <span className="cart-count">{cart.length}</span>}
           </Link>
         </div>
       </div>
@@ -80,4 +67,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar; 
+export default Navbar;

@@ -14,7 +14,7 @@ class DropSerializer(serializers.ModelSerializer):
 class ProductImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ['id', 'image']
+        fields = ['id', 'image', 'position']
 
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
@@ -23,6 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
     drop = DropSerializer(read_only=True)
     images = ProductImageSerializer(many=True, read_only=True)
     image = serializers.ImageField(use_url=True)
+    is_sold = serializers.BooleanField(default=True)
 
     class Meta:
         model = Product
