@@ -16,5 +16,7 @@ urlpatterns = [
     path('api/cart/', views.get_cart, name='get_cart'),
     path('api/cart/add/', views.add_to_cart, name='add_to_cart'),
     path('api/cart/remove/<int:item_id>/', views.remove_from_cart, name='remove_from_cart'),
-    path('api/drops/', views.DropViewSet.as_view, name ='drop-list'),
+    # Remove these two lines since the ViewSet handles them:
+    # path('api/drops/', views.drops_list, name='drops_list'),
+    # path('api/drops/<str:drop_id>/products/', views.products_by_drop, name='products_by_drop'),
 ]

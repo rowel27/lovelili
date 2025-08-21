@@ -10,15 +10,23 @@ const api = axios.create({
 });
 
 export const apiService = {
+  // Drops
   getDrops: () => api.get('/drops/'),
   getCurrentDrop: () => api.get('/drops/current/'),
   getDrop: (id) => api.get(`/drops/${id}/`),
+
+  // Categories
   getCategories: () => api.get('/categories/'),
   getCategory: (id) => api.get(`/categories/${id}/`),
+
+  // Products
   getProducts: (params = {}) => api.get('/products/', { params }),
   getProduct: (id) => api.get(`/products/${id}/`),
-  getProductsByCategory: (categoryId) => api.get('/products/', { params: { category: categoryId } }),
-  getProductsByDrop: (dropId) => api.get('/products/', { params: { drop: dropId } }),
+  getProductsByCategory: (categoryId, params = {}) =>
+    api.get('/products/', { params: { category: categoryId, ...params } }),
+  getProductsByDrop: (dropId, params = {}) =>
+    api.get('/products/', { params: { drop: dropId, ...params } }),
 };
+
 
 export default api;

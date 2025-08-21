@@ -46,8 +46,8 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/products"
-            className={`navbar-link ${isActive('/products') ? 'active' : ''}`}
+            to="/drops"
+            className={`navbar-link ${isActive('/drops') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             Products

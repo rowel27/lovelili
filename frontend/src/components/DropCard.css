@@ -1,0 +1,82 @@
+.drops-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .drops-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .drops-card-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .drops-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .all-products-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .drops-card-content {
+    padding: 1.5rem;
+  }
+  
+  .drops-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0 0 0.75rem 0;
+    color: #2d3748;
+  }
+  
+  .drops-card-description {
+    color: #666;
+    line-height: 1.6;
+    margin: 0 0 0.75rem 0;
+    font-size: 0.95rem;
+  }
+  
+  .drops-card-date {
+    color: #888;
+    font-size: 0.85rem;
+    margin: 0;
+    font-style: italic;
+  }
+  
+  /* Mobile responsive */
+  @media (max-width: 768px) {
+    .drops-card-image {
+      height: 150px;
+    }
+    
+    .drops-card-content {
+      padding: 1rem;
+    }
+    
+    .drops-card-title {
+      font-size: 1.3rem;
+    }
+  }

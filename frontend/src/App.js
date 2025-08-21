@@ -5,7 +5,8 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Products from './pages/Products'; // Add this import
 import ProductDetail from './pages/ProductDetail';
-import Drops from './pages/Drops';
+import DropPage from './pages/DropPage';
+import ProductFeed from './components/ProductFeed';
 import Footer from './components/Footer';
 import { CartProvider } from './context/CartContext';
 import CartPage from './pages/CartPage';
@@ -23,8 +24,11 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/products/:id" element={<ProductDetail />} />
-              <Route path="/drops" element={<Drops />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/drops" element={<DropPage />} />
+              <Route path="/drops/:dropId" element={<DropPage />} />
+              <Route path="/products/all" element={<ProductFeed />} />
+              <Route path="/products/drop/:dropId" element={<ProductFeed/>} />
             </Routes>
           </main>
           <Footer />

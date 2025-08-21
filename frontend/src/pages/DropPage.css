@@ -1,0 +1,57 @@
+.drops-page {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .drops-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .drops-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .drops-header p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+  
+  .drops-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .loading, .error {
+    text-align: center;
+    padding: 2rem;
+    font-size: 1.1rem;
+  }
+  
+  .error {
+    color: #dc3545;
+  }
+  
+  .loading {
+    color: #666;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .drops-page {
+      padding: 1rem;
+    }
+    
+    .drops-header h1 {
+      font-size: 2rem;
+    }
+    
+    .drops-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }

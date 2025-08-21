@@ -39,16 +39,18 @@ def create_checkout_session(request):
             return JsonResponse({"error": "Cart is empty"}, status=400)
 
         line_items = []
+        product_ids = []
+
         for item in cart_items:
             product_id = item.get("id")
             product = Product.objects.get(id=product_id)
 
-            # optional: check availability
             if product.is_sold or product.is_reserved:
                 return JsonResponse({"error": f"{product.name} is unavailable"}, status=400)
 
             product.is_reserved = True
             product.save()
+            product_ids.append(str(product.id))
 
             line_items.append({
                 "price_data": {
@@ -59,20 +61,71 @@ def create_checkout_session(request):
                 "quantity": 1,
             })
 
+        # Determine shipping options
+        shipping_options = [
+            {
+                "shipping_rate_data": {
+                    "display_name": "Standard US Shipping",
+                    "type": "fixed_amount",
+                    "fixed_amount": {"amount": 500, "currency": "usd"},  # $5
+                    "delivery_estimate": {
+                        "minimum": {"unit": "business_day", "value": 3},
+                        "maximum": {"unit": "business_day", "value": 5},
+                    },
+                },
+            },
+        ]
+
+        # If international shipping is allowed
+        if "allowed_countries" in data and any(c != "US" for c in data["allowed_countries"]):
+            shipping_options.append({
+                "shipping_rate_data": {
+                    "display_name": "International Shipping",
+                    "type": "fixed_amount",
+                    "fixed_amount": {"amount": 1500, "currency": "usd"},  # $25
+                    "delivery_estimate": {
+                        "minimum": {"unit": "business_day", "value": 7},
+                        "maximum": {"unit": "business_day", "value": 14},
+                    },
+                },
+            })
+
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=line_items,
             mode="payment",
-            shipping_address_collection={"allowed_countries": ["US", "CA"]},
+            shipping_address_collection={
+                "allowed_countries": ["US", "CA", "GB", "AU", "FR"]
+            },
+            shipping_options=[
+                {
+                    "shipping_rate_data": {
+                        "display_name": "US Shipping",
+                        "type": "fixed_amount",
+                        "fixed_amount": {"amount": 500, "currency": "usd"},
+                    }
+                },
+                {
+                    "shipping_rate_data": {
+                        "display_name": "International Shipping",
+                        "type": "fixed_amount",
+                        "fixed_amount": {"amount": 1500, "currency": "usd"},
+                    }
+                }
+            ],
+            metadata={"product_ids": ",".join(product_ids)},
             success_url="http://localhost:3000/success",
             cancel_url="http://localhost:3000/cancel",
-        )
+)
+
 
         return JsonResponse({"url": session.url})
 
     except Exception as e:
         print("Checkout error:", e)
         return JsonResponse({"error": str(e)}, status=500)
+
+
 
 
 @csrf_exempt
@@ -193,6 +246,24 @@ def remove_from_cart(request, item_id):
         'cart_total_items': cart.get_total_items(),
         'cart_total_price': str(cart.get_total_price())
     })
+
+@api_view(['GET'])
+def drops_list(request):
+    """Return all live drops with their basic info"""
+    drops = Drop.objects.filter(is_live=True).order_by('-drop_date')
+    drops_data = []
+    
+    for drop in drops:
+        drops_data.append({
+            'id': drop.id,
+            'name': drop.name,
+            'description': drop.description,
+            'drop_date': drop.drop_date,
+            # You might want to add a featured image to your Drop model
+            # 'image': drop.featured_image.url if drop.featured_image else None,
+        })
+    
+    return Response(drops_data)
 
 class DropViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Drop.objects.all()

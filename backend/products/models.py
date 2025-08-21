@@ -13,6 +13,7 @@ class Drop(models.Model):
     drop_date = models.DateTimeField()
     is_live = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
+    featured_image = models.ImageField(upload_to='drops/', blank=True, null=True)
 
     def __str__(self):
         return self.name
