@@ -36,6 +36,7 @@ class Product(models.Model):
     drop = models.ForeignKey(Drop, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/')
     is_sold = models.BooleanField(default=False)
+    is_reserved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     stripe_price_id = models.CharField(max_length=255, blank=True, null=True)
 

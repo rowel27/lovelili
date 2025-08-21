@@ -40,7 +40,7 @@ class ProductImageInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'category', 'drop', 'price', 'is_sold', 'created_at']
-    list_filter = ['category', 'drop', 'is_sold', 'created_at']
+    list_filter = ['category', 'drop', 'is_sold', 'is_reserved', 'created_at']
     search_fields = ['name', 'description']
     ordering = ['-created_at']
     date_hierarchy = 'created_at'
@@ -57,7 +57,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('image',)
         }),
         ('Status', {
-            'fields': ('is_sold',)
+            'fields': ('is_sold', 'is_reserved')
         }),
         ('Timestamps', {
             'fields': ('created_at',),

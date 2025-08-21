@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import { apiService } from '../services/api';
 import './Drops.css';
 
@@ -55,18 +55,7 @@ const Drops = () => {
   };
 
 
-  const getProductImage = (productName) => {
-    // Generate placeholder images based on product name
-    const imageMap = {
-      'Luna Moonstone Pendant': 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&h=600&fit=crop',
-      'Golden Chain Statement Necklace': 'https://images.unsplash.com/photo-1573408301185-9146fe634ad0?w=800&h=600&fit=crop',
-      'Bohemian Crystal Choker': 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&h=600&fit=crop',
-      'Pearl Drop Earrings': 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&h=600&fit=crop',
-      'Geometric Gold Hoops': 'https://images.unsplash.com/photo-1602751584552-8ba73aad10e1?w=800&h=600&fit=crop',
-      'Handmade Clay Earrings': 'https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=800&h=600&fit=crop',
-    };
-    return imageMap[productName] || 'https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=800&h=600&fit=crop';
-  };
+
 
   const handlePurchase = (product) => {
     // TODO: Implement purchase functionality

@@ -11,7 +11,7 @@
 }
 
 /* Product Image Section */
-.product-image-section {
+.product-details .product-image-section {
   order: 0;
   width: 100%;
   /* Remove position: sticky and top if not needed */
@@ -21,7 +21,7 @@
   min-height: 400px; /* or whatever minimum you want */
 }
 
-.product-image {
+.product-details .product-image {
   width: 100%;
   max-width: 800px;
   aspect-ratio: 6/6;

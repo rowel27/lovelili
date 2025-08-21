@@ -25,6 +25,61 @@
     grid-template-columns: 1fr;
   }
 }
+.sort-buttons {
+  width: 90%;
+  max-width: 1200px;
+  margin: 24px auto 24px auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;          /* More space between buttons */
+  flex-wrap: wrap;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.sort-buttons span {
+  font-weight: 600;
+  margin-right: 12px;
+  white-space: nowrap;
+  font-family:'Courier New', Courier, monospace;
+  font-size: 16px;
+}
+
+.sort-buttons button {
+  background: #ffffff;
+  border: 1.5px solid #d1d5db;  /* subtle gray border */
+  border-radius: 9px;        /* fully rounded pill shape */
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  color: #374151;               /* dark gray text */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: 
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    color 0.3s ease;
+}
+
+.sort-buttons button:hover {
+  background-color: #f3f4f6;     /* very light gray */
+  border-color: #9ca3af;         /* medium gray */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  color: #111827;                /* near black */
+}
+
+.sort-buttons button.active {
+  background-color: #2563eb;     /* bright blue */
+  border-color: #2563eb;
+  color: white;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.6);
+}
+
+.sort-buttons button:focus-visible {
+  outline: 3px solid #60a5fa;   /* blue focus ring for accessibility */
+  outline-offset: 2px;
+}
 
 .loading,
 .no-products {

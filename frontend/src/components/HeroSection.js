@@ -1,12 +1,18 @@
 import React from 'react';
 import './HeroSection.css';
 import heroImage from '../assets/IMG_3965.PNG';
+import { useNavigate } from 'react-router-dom';
 
-const onClickShopNow = () => {
-  window.location.href = '/products'; // Redirect to products page
-};
 
 const HeroSection = () => {
+
+  const navigate = useNavigate();
+
+  const onClickShopNow = () => {
+    navigate('/products'); 
+  // ✅ client-side navigation
+  };
+
   return (
     <div 
       className="hero-section"

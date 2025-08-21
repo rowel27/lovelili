@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-csn7t#h22oz50g0agl4xm0@&ql5d5e!sb0zt5df9a_jg7okxe4
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0',]  # Allow all hosts for development
 
 
 # Application definition
@@ -152,5 +152,12 @@ SITE_URL = 'http://localhost:8000'
 STRIPE_PUBLIC_KEY = 'pk_test_51RlCbiPUQ407oy82x7OvlTkfTenPuFh0vaqzE0eYE19d7K3fI3K2QdEnIQq23pyhOyjT894nDFTobQcsAscxN4Xk006b358Zto'
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default="secret")
 STRIPE_WEBHOOK_SECRET = 'whsec_d2707b449b7d2405a83ced0a6e55c23606967a7f8616afdce34db8e62bb827f0'
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
