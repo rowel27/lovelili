@@ -10,6 +10,9 @@ const ProductFeed = ({ showFilters = false }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortOption, setSortOption] = useState('');
+  const [dropName, setDropName] = useState('All Products');
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [allProducts, setAllProducts] = useState([]); // Store all products for filtering
 
   // Function to fetch products (works for all drops or a specific drop)
   const fetchProducts = useCallback(async (ordering = sortOption) => {
@@ -23,9 +26,12 @@ const ProductFeed = ({ showFilters = false }) => {
       if (dropId && dropId !== 'all') {
         // Fetch products for a specific drop
         response = await apiService.getProductsByDrop(dropId, params);
+        const nameFromResponse = response.data[0]?.drop?.name || `Drop ${dropId}`;
+        setDropName(nameFromResponse);
       } else {
         // Fetch all products
         response = await apiService.getProducts(params);
+        setDropName('All Products');
       }
 
       // Format products consistently
@@ -36,10 +42,14 @@ const ProductFeed = ({ showFilters = false }) => {
         price: p.price,
         compareAtPrice: p.compareAtPrice || null,
         is_sold: p.is_sold === true,
-        drop: p.drop || p.collection || 'general',
+        drop: p.drop?.name || p.collection?.name || p.collection || 'general',
+        category: p.category?.name || p.type?.name || p.product_type?.name || p.category || p.type || p.product_type || 'uncategorized',
       }));
 
+      setAllProducts(formatted);
       setProducts(formatted);
+
+      
     } catch (err) {
       console.error('Error fetching products:', err);
       setError('Failed to load products.');
@@ -48,22 +58,44 @@ const ProductFeed = ({ showFilters = false }) => {
     }
   }, [dropId, sortOption]);
 
+  // Filter products by category
+  const filterProductsByCategory = useCallback(() => {
+    let filtered = [...allProducts];
+    
+    if (categoryFilter && categoryFilter !== '') {
+      filtered = filtered.filter(product => product.category === categoryFilter);
+    }
+    
+    setProducts(filtered);
+  }, [allProducts, categoryFilter]);
+
   // Fetch products on mount and whenever dropId or sortOption changes
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
+  // Filter products whenever category filter changes
+  useEffect(() => {
+    filterProductsByCategory();
+  }, [filterProductsByCategory]);
+
   const getDropDisplayName = () => {
     if (!dropId || dropId === 'all') return 'All Products';
-    return `Drop ${""}`; // <--- here
+    return ` ${""}`; // <--- here
   };
+
+  const categories = Array.from(new Set(allProducts.map(p => p.category))).sort();
+
   
   if (loading) return <div className="loading">Loading products...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <>
-
+    {/* Drop header */}
+    <div className="drop-header">
+        <h1>{dropName}</h1>
+      </div>
       {/* Sorting buttons */}
       <div className="sort-buttons">
         <span>Sort by:</span>
@@ -81,11 +113,30 @@ const ProductFeed = ({ showFilters = false }) => {
           >
             {label}
           </button>
+          
         ))}
+
+        {/* Category Filter Dropdown */}
+        <div className="category-filter">
+          <label htmlFor="category-select">Filter by Category:</label>
+          <select
+            id="category-select"
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+          >
+            <option value="">All Categories</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+        </div>
+
         {/* Drop header */}
         {dropId && dropId !== 'all' && (
           <div className="drop-header">
-            <h1>{getDropDisplayName}</h1>
+            <h1>{getDropDisplayName()}</h1>
           </div>
       )}
       </div>

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { apiService } from '../services/api'; // Make sure you have this
 import './Navbar.css';
 import cartIcon from '../assets/cart-icon.png'; // or .svg
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [drops, setDrops] = useState([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { cart } = useCart();
 
   const isActive = (path) => location.pathname === path;
@@ -20,7 +24,21 @@ const Navbar = () => {
 
   useEffect(() => {
     setIsMenuOpen(false);
+    setIsDropdownOpen(false); // close dropdown on route change
   }, [location]);
+
+  // Fetch drops for the dropdown
+  useEffect(() => {
+    const fetchDrops = async () => {
+      try {
+        const response = await apiService.getDrops();
+        setDrops(response.data);
+      } catch (err) {
+        console.error('Failed to fetch drops:', err);
+      }
+    };
+    fetchDrops();
+  }, []);
 
   return (
     <nav className="navbar">
@@ -45,13 +63,47 @@ const Navbar = () => {
           >
             Home
           </Link>
-          <Link
-            to="/drops"
-            className={`navbar-link ${isActive('/drops') ? 'active' : ''}`}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Products
-          </Link>
+
+          {/* Products dropdown */}
+          <div className="navbar-dropdown">
+            <button
+              className={`navbar-link dropdown-toggle ${isActive('/drops') ? 'active' : ''}`}
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            >
+              Products ▾
+            </button>
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                {/* All Products */}
+                <button
+                  className="dropdown-item"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    setIsDropdownOpen(false);
+                    navigate('/products/all'); // matches DropCard's all products link
+                  }}
+                >
+                  All Products
+                </button>
+
+                {/* Map through all drops */}
+                {drops.map((drop) => (
+                  <button
+                    key={drop.id}
+                    className="dropdown-item"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsDropdownOpen(false);
+                      navigate(`/products/drop/${drop.id}`); // matches DropCard link
+                    }}
+                  >
+                    {drop.name}
+                  </button>
+                ))}
+              </div>
+            )}
+</div>
+
           <Link
             to="/cart"
             className="navbar-link cart-link"

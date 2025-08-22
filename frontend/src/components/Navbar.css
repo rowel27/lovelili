@@ -9,6 +9,48 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding: 16px 0;
 }
+
+.navbar-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+  min-width: 150px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  color: black;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+
 .cart-link svg {
   width: 10px;   /* smaller width */
   height: 10px;  /* smaller height */
@@ -178,6 +220,47 @@
     font-weight: 600;
     transition: all 0.2s ease;
   }
+
+  .navbar-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+  min-width: 150px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  color: black;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
   
   .navbar-link:hover {
     background: rgba(0, 0, 0, 0.05);
@@ -213,4 +296,41 @@
   .hamburger::after {
     bottom: -10px;
   }
-} 
+
+  .navbar-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 4px;
+  min-width: 150px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  color: black;
+  text-decoration: none;
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;
+}
+}

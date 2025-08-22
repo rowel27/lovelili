@@ -17,13 +17,6 @@ const ProductDetail = () => {
   const isInCart = product ? cart.some(item => item.id === product.id) : false;
   const navigate = useNavigate();
 
-/**const HandleStripeCheckout = () => {
-    // Placeholder for now - add your checkout logic later
-    console.log('Starting checkout for product:', product.id);
-    // You can implement Stripe checkout logic here later
-  };
-**/
-
 
   const handleCartClick = () => {
     if (isInCart) {
@@ -134,10 +127,12 @@ const ProductDetail = () => {
         {/* Breadcrumb */}
         <nav className="breadcrumb">
           <Link to="/">Home</Link>
-          <span className="breadcrumb-separator">&gt;</span>
-          <Link to="/products">Products</Link>
-          <span className="breadcrumb-separator">&gt;</span>
-          <span className="breadcrumb-current">{product.name}</span>
+          <span> &gt; </span>
+
+          <Link to="/products/all">Products</Link>
+          <span> &gt; </span>
+
+          <span>{product.name}</span>
         </nav>
         <div className="product-detail">
           {/* Product Image */}

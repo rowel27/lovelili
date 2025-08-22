@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { apiService } from '../services/api';
 import DropCard from '../components/DropCard';
 import './DropPage.css'; // You'll need to create this CSS file
@@ -41,6 +42,12 @@ const DropPage = () => {
 
   return (
     <div className="drops-page">
+      <nav className="breadcrumb">
+          <Link to="/">Home</Link>
+          <span className="breadcrumb-separator">&gt;</span>
+          <Link to="/products">Products</Link>
+          <span className="breadcrumb-separator">&gt;</span>
+        </nav>
       <div className="drops-header">
         <h1>Choose a Collection</h1>
         <p>Browse products by drop or see everything we have available</p>

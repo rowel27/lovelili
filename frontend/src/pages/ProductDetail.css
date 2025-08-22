@@ -76,7 +76,7 @@
   letter-spacing: 2px;
 }
 
-.product-price {
+.product-detail .product-price {
   font-size: 2rem;
   color: #000000 !important;
   font-weight: 200;
@@ -232,7 +232,7 @@
     font-size: 2rem;
   }
   
-  .product-price {
+  .product-detail .product-price {
     font-size: 1.75rem;
   }
 }
