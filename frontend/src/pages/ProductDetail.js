@@ -71,15 +71,6 @@ const ProductDetail = () => {
     setCurrentImageIndex(idx);
   };
 
-
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  };
-
   if (loading) {
     return (
       <div className="loading">
@@ -196,11 +187,6 @@ const ProductDetail = () => {
                   </span>
                 </div>
               )}
-              
-              <div className="meta-item">
-                <span className="meta-label">Added:</span>
-                <span className="meta-value">{formatDate(product.created_at)}</span>
-              </div>
             </div>
 
             <div className="product-description">

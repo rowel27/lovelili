@@ -13,7 +13,7 @@ class Drop(models.Model):
     drop_date = models.DateTimeField()
     is_live = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
-    featured_image = models.ImageField(upload_to='drops/', blank=True, null=True)
+    featured_image = models.ImageField(upload_to='drops/featured_image', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -36,7 +36,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     drop = models.ForeignKey(Drop, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='products/')
-    is_sold = models.BooleanField(default=False)
+    is_sold = models.BooleanField(default=True)
     is_reserved = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     stripe_price_id = models.CharField(max_length=255, blank=True, null=True)

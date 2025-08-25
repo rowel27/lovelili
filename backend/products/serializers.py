@@ -7,6 +7,8 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DropSerializer(serializers.ModelSerializer):
+    featured_image = serializers.ImageField(use_url=True, read_only=True)
+    
     class Meta:
         model = Drop
         fields = '__all__'

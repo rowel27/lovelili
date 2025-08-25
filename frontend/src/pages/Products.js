@@ -1,5 +1,5 @@
 import React from 'react';
-import ProductFeed from '../components/ProductFeed';
+import ProductFeed from './ProductFeed';
 
 const Products = () => {
   return (

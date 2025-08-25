@@ -6,7 +6,7 @@ import Home from './pages/Home';
 import Products from './pages/Products'; // Add this import
 import ProductDetail from './pages/ProductDetail';
 import DropPage from './pages/DropPage';
-import ProductFeed from './components/ProductFeed';
+import ProductFeed from './pages/ProductFeed';
 import Footer from './components/Footer';
 import { CartProvider } from './context/CartContext';
 import CartPage from './pages/CartPage';

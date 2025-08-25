@@ -47,6 +47,8 @@ const DropPage = () => {
           <span className="breadcrumb-separator">&gt;</span>
           <Link to="/products">Products</Link>
           <span className="breadcrumb-separator">&gt;</span>
+          <span>Drops</span>
+
         </nav>
       <div className="drops-header">
         <h1>Choose a Collection</h1>
