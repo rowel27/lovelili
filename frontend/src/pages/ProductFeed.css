@@ -1,8 +1,7 @@
-/* ProductFeed.css */
-
+/* ----------------- GRID ----------------- */
 .product-feed-grid-container {
   width: 100%;
-  padding: 40px 0;
+  padding: 0px 0;
   display: flex;
   justify-content: center;
   background: #fafbfc;
@@ -24,17 +23,19 @@
 
 @media (max-width: 700px) {
   .product-feed-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px; /* tighter on mobile */
   }
 }
 
+/* ----------------- SORT BUTTONS ----------------- */
 .sort-buttons {
   width: 90%;
   max-width: 1200px;
-  margin: 24px auto 24px auto;
+  margin: 16px auto;
   display: flex;
   align-items: center;
-  gap: 16px;          /* More space between buttons */
+  gap: 12px;
   flex-wrap: wrap;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
@@ -42,127 +43,63 @@
 
 .sort-buttons span {
   font-weight: 600;
-  margin-right: 12px;
+  font-size: 15px;
   white-space: nowrap;
-  font-family:'Courier New', Courier, monospace;
-  font-size: 16px;
 }
 
 .sort-buttons button {
-  background: #ffffff;
-  border: 1.5px solid #d1d5db;  /* subtle gray border */
-  border-radius: 9px;        /* fully rounded pill shape */
-  padding: 8px 20px;
+  background: #fff;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  padding: 6px 16px;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 500;
-  color: #374151;               /* dark gray text */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: 
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    color 0.3s ease;
+  color: #374151;
+  transition: all 0.3s ease;
 }
 
 .sort-buttons button:hover {
-  background-color: #f3f4f6;     /* very light gray */
-  border-color: #9ca3af;         /* medium gray */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  color: #111827;                /* near black */
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
 }
 
 .sort-buttons button.active {
-  background-color: #2563eb;     /* bright blue */
+  background-color: #2563eb;
   border-color: #2563eb;
-  color: white;
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.6);
+  color: #fff;
 }
 
-.sort-buttons button:focus-visible {
-  outline: 3px solid #60a5fa;   /* blue focus ring for accessibility */
-  outline-offset: 2px;
-}
-
-.loading, .no-products {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 300px;
-  text-align: center;
-  padding: 40px;
-}
-
-
-/* Category Filter Dropdown - New Addition */
+/* ----------------- CATEGORY FILTER ----------------- */
 .category-filter {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin-left: auto;
-  padding: 6px 12px;
-  background: #ffffff;
-  border-radius: 9px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  padding: 6px 10px;
+  background: #fff;
+  border-radius: 8px;
   border: 1.5px solid #d1d5db;
 }
 
 .category-filter label {
   font-weight: 600;
+  font-size: 14px;
   color: #333;
-  font-size: 15px;
   white-space: nowrap;
-  font-family: 'Courier New', Courier, monospace;
 }
 
 .category-filter select {
-  padding: 8px 16px;
+  padding: 6px 12px;
   border: 1.5px solid #d1d5db;
-  border-radius: 9px;
-  background: #ffffff;
-  color: #374151;
-  font-size: 15px;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 14px;
   font-weight: 500;
   cursor: pointer;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  transition: 
-    background-color 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease,
-    color 0.3s ease;
-  min-width: 160px;
+  min-width: 140px;
 }
 
-.category-filter select:hover {
-  background-color: #f3f4f6;
-  border-color: #9ca3af;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.category-filter select:focus {
-  outline: 3px solid #60a5fa;
-  outline-offset: 2px;
-  border-color: #2563eb;
-}
-
-/* Drop header styling */
-.drop-header {
-  text-align: center;
-  margin-bottom: 1rem;
-  padding: 1rem 0;
-}
-
-.drop-header h1 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
-  margin: 0;
-  letter-spacing: -0.02em;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-/* Responsive adjustments for category filter */
 @media (max-width: 768px) {
   .category-filter {
     margin-left: 0;
@@ -175,4 +112,38 @@
     flex: 1;
     min-width: auto;
   }
+}
+
+/* ----------------- DROP HEADER ----------------- */
+.drop-header {
+  height: 275px;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.drop-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media (max-width: 768px) {
+  .drop-header h1 {
+    height: '600px';
+    font-size: 1.5rem; /* ✅ smaller on phones */
+  }
+  
+}
+
+/* ----------------- LOADING / EMPTY ----------------- */
+.loading,
+.no-products {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  text-align: center;
+  padding: 20px;
 }

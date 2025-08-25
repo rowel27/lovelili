@@ -11,6 +11,9 @@ import Footer from './components/Footer';
 import { CartProvider } from './context/CartContext';
 import CartPage from './pages/CartPage';
 import ScrollToTop from './services/ScrollToTop';
+import SuccessPage from './pages/SuccessPage';
+import CancelPage from './pages/CancelPage';
+
 
 function App() {
   return (
@@ -29,6 +32,8 @@ function App() {
               <Route path="/drops/:dropId" element={<DropPage />} />
               <Route path="/products/all" element={<ProductFeed />} />
               <Route path="/products/drop/:dropId" element={<ProductFeed/>} />
+              <Route path="/success" element={<SuccessPage />} />
+              <Route path="/cancel" element={<CancelPage />} />
             </Routes>
           </main>
           <Footer />

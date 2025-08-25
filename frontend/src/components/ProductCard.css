@@ -108,10 +108,22 @@
     opacity: 1 !important;  /* always visible */
     background: #000;       /* optional: add contrast background */
     padding: 0.5rem;
+    display: none;
+  }
+
+  @media(max-width: 700px) {
+    .product-name{
+      display: none;
+    }
   }
 
   .product-title,
   .product-price {
     color: #fff;
+  }
+  .product-card,
+  .product-card:hover {
+    box-shadow: none;
+    transform: none;
   }
 }

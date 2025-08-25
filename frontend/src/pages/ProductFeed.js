@@ -99,7 +99,6 @@ const ProductFeed = ({ showFilters = false }) => {
     <div 
         className="drop-header" 
         style={{ 
-          height: '400px',
           backgroundImage: dropImage ? `url(${dropImage})` : 'none',
           backgroundSize: 'cover',
           backgroundPosition: 'center',

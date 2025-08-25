@@ -19,9 +19,10 @@ export const CartProvider = ({ children }) => {
   const addToCart = (product) => {
     setCart(prev => {
       if (prev.some(item => item.id === product.id)) return prev;
-      return [...prev, product];
+      return [...prev, { id: product.id, name: product.name, price: product.price, image: product.image}];
     });
   };
+  
 
   const removeFromCart = (productId) => {
     setCart(prev => prev.filter(item => item.id !== productId));

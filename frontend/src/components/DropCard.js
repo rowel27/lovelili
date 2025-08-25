@@ -3,11 +3,10 @@ import { Link } from 'react-router-dom';
 import './DropCard.css'; // You'll need to create this CSS file
 
 const DropCard = ({ drop, isAllCard = false }) => {
-  const linkTo = isAllCard
-  ? '/products/all'
-  : `/products/drop/${drop.id}`; // note the 'drop' segment
+  const linkTo = isAllCard 
+    ? '/products/all'
+    : `/products/drop/${drop.id}`; // note the 'drop' segment
 
-  
   return (
     <Link to={linkTo} className="drops-card">
       <div className="drops-card-image">
@@ -17,9 +16,9 @@ const DropCard = ({ drop, isAllCard = false }) => {
             <span>All Products</span>
           </div>
         ) : (
-          // You'll need to add an image field to your Drop model
+          // Use the drop's featured_image from your Drop model
           <img 
-            src={drop.image || '/default-drop-image.jpg'} 
+            src={drop.featured_image || '/default-drop-image.jpg'} 
             alt={drop.name}
           />
         )}
@@ -32,7 +31,7 @@ const DropCard = ({ drop, isAllCard = false }) => {
         
         <p className="drops-card-description">
           {isAllCard 
-            ? 'Browse all available products from every drop' 
+            ? 'Browse all available products from every drop'
             : drop.description
           }
         </p>

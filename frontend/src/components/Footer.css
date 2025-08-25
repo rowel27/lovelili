@@ -164,27 +164,3 @@
     font-size: 1.75rem;
   }
 }
-
-@media (max-width: 480px) {
-  .footer-content {
-    gap: 24px;
-  }
-  
-  .footer-brand {
-    font-size: 1.5rem;
-  }
-  
-  .footer-description {
-    font-size: 0.9rem;
-  }
-  
-  .footer-social {
-    flex-direction: column;
-    gap: 12px;
-  }
-  
-  .social-link.instagram {
-    justify-content: center;
-    padding: 10px 16px;
-  }
-} 

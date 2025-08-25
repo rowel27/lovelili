@@ -265,6 +265,24 @@ def drops_list(request):
     
     return Response(drops_data)
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def cancel_reservation(request):
+    """
+    Unreserve products in the cart when payment is canceled.
+    Expects JSON: {"product_ids": [1, 2, 3]}
+    """
+    data = json.loads(request.body)
+    product_ids = data.get("product_ids", [])
+
+    if not product_ids:
+        return JsonResponse({"error": "No product IDs provided"}, status=400)
+
+    products = Product.objects.filter(id__in=product_ids)
+    products.update(is_reserved=False)
+
+    return JsonResponse({"success": True, "message": "Products unreserved"})
+
 class DropViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Drop.objects.all()
     serializer_class = DropSerializer
