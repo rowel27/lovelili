@@ -36,7 +36,11 @@ if RENDER_HOSTNAME:
 
 import dj_database_url
 DATABASES = {
-    "default": dj_database_url.config(default=env("DATABASE_URL", default=""))
+    "default": dj_database_url.config(
+        default=env("DATABASE_URL", default="postgresql://lovelili_db_user:9A5cLNeAakYTtyGfgT6OB6hwVRsNgRsH@dpg-d2mutlmuk2gs73ei5g8g-a/lovelili_db"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
 # Application definition
