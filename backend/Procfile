@@ -1,1 +1,1 @@
-web: gunicorn lovelili.wsgi:application
+web: gunicorn lovelili.wsgi:application --chdir backend
