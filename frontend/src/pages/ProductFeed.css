@@ -116,10 +116,17 @@
 
 /* ----------------- DROP HEADER ----------------- */
 .drop-header {
-  height: 275px;
+  width: 100%;              /* stretch full width */
+  height: 500px;            /* about the same aspect ratio as Twitter */
+  max-height: 400px;        /* prevent it from growing too tall */
+  background-size: cover;   /* image fills */
+  background-position: center;
   text-align: center;
   margin-bottom: 1rem;
+  border-radius: 12px;      /* optional: smooth edges */
+  overflow: hidden;
 }
+
 
 .drop-header h1 {
   font-size: 2rem;

@@ -48,55 +48,24 @@ def create_checkout_session(request):
             if product.is_sold or product.is_reserved:
                 return JsonResponse({"error": f"{product.name} is unavailable"}, status=400)
 
+            if not product.stripe_price_id:
+                return JsonResponse({"error": f"{product.name} is missing a Stripe Price ID"}, status=400)
+
             product.is_reserved = True
             product.save()
             product_ids.append(str(product.id))
 
+            # Use price from database
             line_items.append({
-                "price_data": {
-                    "currency": "usd",
-                    "product_data": {"name": product.name},
-                    "unit_amount": int(product.price * 100),
-                },
+                "price": product.stripe_price_id,
                 "quantity": 1,
-            })
-
-        # Determine shipping options
-        shipping_options = [
-            {
-                "shipping_rate_data": {
-                    "display_name": "Standard US Shipping",
-                    "type": "fixed_amount",
-                    "fixed_amount": {"amount": 500, "currency": "usd"},  # $5
-                    "delivery_estimate": {
-                        "minimum": {"unit": "business_day", "value": 3},
-                        "maximum": {"unit": "business_day", "value": 5},
-                    },
-                },
-            },
-        ]
-
-        # If international shipping is allowed
-        if "allowed_countries" in data and any(c != "US" for c in data["allowed_countries"]):
-            shipping_options.append({
-                "shipping_rate_data": {
-                    "display_name": "International Shipping",
-                    "type": "fixed_amount",
-                    "fixed_amount": {"amount": 1500, "currency": "usd"},  # $25
-                    "delivery_estimate": {
-                        "minimum": {"unit": "business_day", "value": 7},
-                        "maximum": {"unit": "business_day", "value": 14},
-                    },
-                },
             })
 
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=line_items,
             mode="payment",
-            shipping_address_collection={
-                "allowed_countries": ["US", "CA", "GB", "AU", "FR"]
-            },
+            shipping_address_collection={"allowed_countries": ["US", "CA", "GB", "AU", "FR"]},
             shipping_options=[
                 {
                     "shipping_rate_data": {
@@ -116,15 +85,15 @@ def create_checkout_session(request):
             metadata={"product_ids": ",".join(product_ids)},
             success_url="http://localhost:3000/success",
             cancel_url="http://localhost:3000/cancel",
-)
-
+        )
 
         return JsonResponse({"url": session.url})
 
+    except Product.DoesNotExist:
+        return JsonResponse({"error": "Invalid product ID"}, status=400)
     except Exception as e:
         print("Checkout error:", e)
         return JsonResponse({"error": str(e)}, status=500)
-
 
 
 
@@ -140,26 +109,39 @@ def stripe_webhook(request):
     except stripe.error.SignatureVerificationError:
         return JsonResponse({"error": "Invalid signature"}, status=400)
 
-    # payment successful
+    # Payment successful
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
         product_ids = session["metadata"]["product_ids"].split(",")
-        for pid in product_ids:
-            product = Product.objects.get(id=pid)
-            product.is_reserved = False
-            product.is_sold = True
-            product.save()
 
-    # payment abandoned or expired
+        # Retrieve line items from Stripe
+        line_items = stripe.checkout.Session.list_line_items(session["id"])
+        price_ids = [item.price.id for item in line_items.data]
+
+        # Map Stripe Price IDs back to products
+        for product_id, price_id in zip(product_ids, price_ids):
+            try:
+                product = Product.objects.get(id=product_id)
+                product.is_reserved = False
+                product.is_sold = True
+                product.save()
+            except Product.DoesNotExist:
+                continue
+
+    # Payment abandoned or expired
     elif event["type"] == "checkout.session.expired":
         session = event["data"]["object"]
         product_ids = session["metadata"]["product_ids"].split(",")
         for pid in product_ids:
-            product = Product.objects.get(id=pid)
-            product.is_reserved = False
-            product.save()
+            try:
+                product = Product.objects.get(id=pid)
+                product.is_reserved = False
+                product.save()
+            except Product.DoesNotExist:
+                continue
 
     return JsonResponse({"status": "success"})
+
 
 
 @api_view(['GET'])

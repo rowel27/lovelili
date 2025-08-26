@@ -1,6 +1,6 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection'; // Assuming you have a CartPage component
-import leftImage from '../assets/IMG_9306.jpg'
+import leftImage from '../assets/IMG_7716.jpg'
 import rightImage from '../assets/IMG_9310.jpg'
 import videoSource from '../assets/lovelili.MOV'
 // You'll need to create or import a DropsFeed component, or modify this based on how you want to display drops
@@ -38,7 +38,6 @@ const Home = () => {
             height: 'auto',
             objectFit: 'cover'
           }}
-          controls
           autoPlay
           muted
           loop

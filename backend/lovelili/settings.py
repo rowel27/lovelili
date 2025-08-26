@@ -23,13 +23,21 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-csn7t#h22oz50g0agl4xm0@&ql5d5e!sb0zt5df9a_jg7okxe4'
+SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG", default = False)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0',]  # Allow all hosts for development
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0',]
+  # Allow all hosts for development
+RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_HOSTNAME)
 
+import dj_database_url
+DATABASES = {
+    "default": dj_database_url.config(default=env("DATABASE_URL", default=""))
+}
 
 # Application definition
 
@@ -49,6 +57,8 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # after SecurityMiddleware
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -109,9 +119,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
-    "http://192.168.4.46:3000",  # Network access
+    "http://192.168.4.46:3000",
+    "https://myshop-frontend.netlify.app",  # Network access
 ]
 
 
@@ -138,6 +150,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 # Media files (User uploaded content)
 MEDIA_URL = '/media/'
@@ -149,7 +164,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 SITE_URL = 'http://localhost:8000'
 
-STRIPE_PUBLIC_KEY = 'pk_test_51RlCbiPUQ407oy82x7OvlTkfTenPuFh0vaqzE0eYE19d7K3fI3K2QdEnIQq23pyhOyjT894nDFTobQcsAscxN4Xk006b358Zto'
+STRIPE_PUBLIC_KEY = 'pk_test_51S0F6LH2TzfL3ek64Zu0Jb9g8oSMRPc7I494K9WIwuMRnjBw66xb7V2GFb9ciXIMUwbtQHGzVklDHviPSOnJgbQl00o55Vdcgm'
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default="secret")
 STRIPE_WEBHOOK_SECRET = 'whsec_d2707b449b7d2405a83ced0a6e55c23606967a7f8616afdce34db8e62bb827f0'
 
@@ -157,7 +172,7 @@ SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 
 SESSION_COOKIE_SAMESITE = "None"
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

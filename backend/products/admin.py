@@ -39,16 +39,16 @@ class ProductImageInline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'category', 'drop', 'price', 'is_sold', 'created_at']
+    list_display = ['name', 'category', 'drop', 'price', 'is_sold', 'created_at', 'stripe_price_id']
     list_filter = ['category', 'drop', 'is_sold', 'is_reserved', 'created_at']
-    search_fields = ['name', 'description']
+    search_fields = ['name', 'description', 'stripe_price_id']
     ordering = ['-created_at']
     date_hierarchy = 'created_at'
     inlines = [ProductImageInline]
     
     fieldsets = (
         ('Basic Information', {
-            'fields': ('name', 'description', 'price')
+            'fields': ('name', 'description', 'price', 'stripe_price_id')
         }),
         ('Categorization', {
             'fields': ('category', 'drop')

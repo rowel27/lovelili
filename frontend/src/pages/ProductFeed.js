@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { apiService } from '../services/api';
 import ProductCard from '../components/ProductCard';
+import defaultImage from '../assets/IMG_7717.PNG'
 import './ProductFeed.css';
 
 const ProductFeed = ({ showFilters = false }) => {
@@ -40,7 +41,7 @@ const ProductFeed = ({ showFilters = false }) => {
         // Fetch all products
         response = await apiService.getProducts(params);
         setDropName('All Products');
-        setDropImage(''); // No specific drop image for "all products"
+        setDropImage(defaultImage); // No specific drop image for "all products"
       }
 
       // Format products consistently
@@ -97,17 +98,15 @@ const ProductFeed = ({ showFilters = false }) => {
     <>
     {/* Drop header with featured image background */}
     <div 
-        className="drop-header" 
-        style={{ 
-          backgroundImage: dropImage ? `url(${dropImage})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      >
-        <div className="overlay">
-          <h1>{dropName}</h1>
-        </div>
+      className="drop-header" 
+      style={{ 
+        backgroundImage: `url(${dropId === "all" ? defaultImage : dropImage || ''})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      <div className="overlay"></div>
       </div>
 
       {/* Sorting buttons */}
