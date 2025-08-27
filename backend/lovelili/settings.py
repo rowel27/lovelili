@@ -13,40 +13,53 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from environ import Env
+import dj_database_url
+
+# Initialize environment variables
 env = Env()
 env.read_env()
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+# Build paths inside the project
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# ----------------------------
+# SECURITY SETTINGS
+# ----------------------------
 SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
+DEBUG = env.bool("DEBUG", default=False)
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool("DEBUG", default = False)
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    '192.168.4.46',
+    'www.lovelili.onrender.com',
+    'lovelili.onrender.com'
+]
 
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46','www.lovelili.onrender.com', 'lovelili.onrender.com']
-  # Allow all hosts for development
+# Add Render hostname if present
 RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_HOSTNAME)
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://lovelili-1.onrender.com",
+    "https://www.lovelili-1.onrender.com"
+]
 
-import dj_database_url
+# ----------------------------
+# DATABASE
+# ----------------------------
 DATABASES = {
     "default": dj_database_url.config(
-        default=env("DATABASE_URL"),  # Remove the hardcoded connection string
+        default=env("DATABASE_URL"),  # Automatically uses Render DATABASE_URL
         conn_max_age=600,
         ssl_require=True
     )
 }
 
-# Application definition
-
+# ----------------------------
+# APPLICATION DEFINITION
+# ----------------------------
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -62,8 +75,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # After SecurityMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # after SecurityMiddleware
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -90,102 +103,72 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'lovelili.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-"""
-    DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lovelili_db',
-        'USER': 'rowele',
-        'PASSWORD': 'MyPassword!',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        }
-    }
-"""
-
-
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
-
+# ----------------------------
+# AUTHENTICATION & PASSWORD VALIDATION
+# ----------------------------
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',},
 ]
 
+# ----------------------------
+# CORS SETTINGS
+# ----------------------------
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://192.168.4.46:3000",
     "https://lovelili-1.onrender.com",
-    "https://www.lovelili-1.onrender.com",  # Network access
+    "https://www.lovelili-1.onrender.com",
 ]
 
-
-
+# ----------------------------
+# REST FRAMEWORK
+# ----------------------------
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     ]
 }
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.2/topics/i18n/
-
+# ----------------------------
+# INTERNATIONALIZATION
+# ----------------------------
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'America/Los_Angeles'
-
 USE_I18N = True
-
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
+# ----------------------------
+# STATIC & MEDIA FILES
+# ----------------------------
 STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://lovelili-1.onrender.com",
-    "https://www.lovelili-1.onrender.com"
-]
-# Media files (User uploaded content)
-MEDIA_URL = 'https://lovelili-media.onrender.com/media/'  # Render static site URL
+MEDIA_URL = 'https://lovelili-media.onrender.com/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-
+# ----------------------------
+# STRIPE KEYS
+# ----------------------------
 SITE_URL = 'https://lovelili.onrender.com'
+STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY', default='pk_test_placeholder')
+STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default='sk_test_placeholder')
+STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET', default='whsec_placeholder')
 
-STRIPE_PUBLIC_KEY = 'pk_test_51S0F6LH2TzfL3ek64Zu0Jb9g8oSMRPc7I494K9WIwuMRnjBw66xb7V2GFb9ciXIMUwbtQHGzVklDHviPSOnJgbQl00o55Vdcgm'
-STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default="secret")
-STRIPE_WEBHOOK_SECRET = 'whsec_d2707b449b7d2405a83ced0a6e55c23606967a7f8616afdce34db8e62bb827f0'
-
+# ----------------------------
+# SESSION SETTINGS
+# ----------------------------
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False
-
 SESSION_COOKIE_SAMESITE = "None"
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+# ----------------------------
+# DEFAULT PRIMARY KEY FIELD
+# ----------------------------
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
