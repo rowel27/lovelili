@@ -283,9 +283,9 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategorySerializer
 
 class ProductViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Product.objects.all()  # Only show available products
+    queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    filter_backends =[filters.OrderingFilter]
+    filter_backends = [filters.OrderingFilter]
     ordering_fields = ['price', 'is_sold', 'drop']
     ordering = ['drop']
     
@@ -295,10 +295,23 @@ class ProductViewSet(viewsets.ReadOnlyModelViewSet):
         drop = self.request.query_params.get('drop')
         
         if category:
-            queryset = queryset.filter(category__id=category)
+            try:
+                # Convert to int and check if category exists
+                category_id = int(category)
+                queryset = queryset.filter(category__id=category_id)
+            except (ValueError, TypeError):
+                # Invalid category ID, return empty queryset
+                return Product.objects.none()
+                
         if drop:
-            queryset = queryset.filter(drop__id=drop)
-            
+            try:
+                # Convert to int and check if drop exists
+                drop_id = int(drop)
+                queryset = queryset.filter(drop__id=drop_id)
+            except (ValueError, TypeError):
+                # Invalid drop ID, return empty queryset
+                return Product.objects.none()
+                
         return queryset
 
 #! /usr/bin/env python3.6
