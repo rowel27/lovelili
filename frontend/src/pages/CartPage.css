@@ -115,10 +115,13 @@
     width: 150px;
     height: auto;
   }
+  /* Make Sold Out button smaller on mobile */
+
 
   .cart-summary {
     font-size: 1.1rem;
   }
+  
 }
 
 @media (min-width: 900px) {

@@ -402,3 +402,14 @@
   font-weight: 400;
 } 
 
+/* Make Sold Out button smaller on mobile */
+@media (max-width: 768px) {
+  .product-actions .btn{
+    width: 75%;          /* half the container width */
+    display: block;      /* needed for margin auto to work */
+    margin: 10px auto 0; /* top spacing and centered horizontally */
+    padding-top: 20px;    /* keep height */
+    padding-bottom: 20px; /* keep height */
+    font-size: 1rem;   /* adjust text size if needed */
+  }
+}
