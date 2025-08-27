@@ -10,22 +10,20 @@ const api = axios.create({
 });
 
 export const apiService = {
-  // Drops
-  getDrops: () => api.get('/drops/'),
-  getCurrentDrop: () => api.get('/drops/current/'),
-  getDrop: (id) => api.get(`/drops/${id}/`),
-
-  // Categories
-  getCategories: () => api.get('/categories/'),
-  getCategory: (id) => api.get(`/categories/${id}/`),
-
-  // Products
-  getProducts: (params = {}) => api.get('/products/', { params }),
-  getProduct: (id) => api.get(`/products/${id}/`),
+  // Update all these paths to include /api/
+  getDrops: () => api.get('/api/drops/'),
+  getCurrentDrop: () => api.get('/api/drops/current/'),
+  getDrop: (id) => api.get(`/api/drops/${id}/`),
+  
+  getCategories: () => api.get('/api/categories/'),
+  getCategory: (id) => api.get(`/api/categories/${id}/`),
+  
+  getProducts: (params = {}) => api.get('/api/products/', { params }),
+  getProduct: (id) => api.get(`/api/products/${id}/`),
   getProductsByCategory: (categoryId, params = {}) =>
-    api.get('/products/', { params: { category: categoryId, ...params } }),
+    api.get('/api/products/', { params: { category: categoryId, ...params } }),
   getProductsByDrop: (dropId, params = {}) =>
-    api.get('/products/', { params: { drop: dropId, ...params } }),
+    api.get('/api/products/', { params: { drop: dropId, ...params } }),
 };
 
 export default api;
