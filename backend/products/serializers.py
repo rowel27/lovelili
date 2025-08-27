@@ -20,6 +20,14 @@ class ProductImageSerializer(serializers.ModelSerializer):
         model = ProductImage
         fields = ['id', 'image', 'position', 'image_url']
 
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        elif obj.image:
+            return obj.image.url
+        return None
+
 class ProductSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(read_only=True)
     stripe_price_id = serializers.CharField(required=False, allow_blank=True)
@@ -36,8 +44,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_image_url(self, obj):
         request = self.context.get('request')
-        if obj.image:
+        if obj.image and request:  # ← Add request check
             return request.build_absolute_uri(obj.image.url)
+        elif obj.image:
+            return obj.image.url  # Fallback to relative URL
         return None
-    
-        
+            
