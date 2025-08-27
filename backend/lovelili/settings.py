@@ -129,9 +129,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://192.168.4.46:3000",
     "https://lovelili-1.onrender.com",
-    "https://wwwlovelili-1.onrender.com"
-    "https://lovelili.onrender.com",
-    "https://www.lovelili.onrender.com"  # Network access
+    "https://www.lovelili-1.onrender.com",  # Network access
 ]
 
 
