@@ -28,7 +28,7 @@ SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default = False)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0','lovelili.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0','https://www.lovelili.onrender.com', 'https://lovelili.onrender.com']
   # Allow all hosts for development
 RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_HOSTNAME:
@@ -93,16 +93,16 @@ WSGI_APPLICATION = 'lovelili.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-#DATABASES = {
- #   'default': {
-     #   'ENGINE': 'django.db.backends.postgresql',
-     #   'NAME': 'lovelili_db',
-      #  'USER': 'rowele',
-     #   'PASSWORD': 'MyPassword!',
-     #   'HOST': 'localhost',
-     #   'PORT': '5432',
-   # }
-#}
+DATABASES = {
+   'default': {
+       'ENGINE': 'django.db.backends.postgresql',
+       'NAME': 'lovelili_db',
+       'USER': 'rowele',
+       'PASSWORD': 'MyPassword!',
+       'HOST': 'localhost',
+       'PORT': '5432',
+    }
+}
 
 
 # Password validation
@@ -123,11 +123,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://192.168.4.46:3000",
-    "https://myshop-frontend.netlify.app",  # Network access
+    "https://lovelili.onrender.com",
+    "https://www.lovelili.onrender.com"  # Network access
 ]
 
 
@@ -157,7 +158,9 @@ STATIC_URL = 'static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://lovelili-1.onrender.com"
+]
 # Media files (User uploaded content)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -166,7 +169,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 
-SITE_URL = 'http://localhost:8000'
+SITE_URL = 'https://lovelili-1.onrender.com'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51S0F6LH2TzfL3ek64Zu0Jb9g8oSMRPc7I494K9WIwuMRnjBw66xb7V2GFb9ciXIMUwbtQHGzVklDHviPSOnJgbQl00o55Vdcgm'
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default="secret")
