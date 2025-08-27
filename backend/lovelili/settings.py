@@ -27,6 +27,8 @@ SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default = False)
+if(DEBUG == False):
+    TESTING = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46','www.lovelili.onrender.com', 'lovelili.onrender.com']
   # Allow all hosts for development
@@ -91,18 +93,18 @@ WSGI_APPLICATION = 'lovelili.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-"""
-DATABASES = {
-   'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'lovelili_db',
-       'USER': 'rowele',
-       'PASSWORD': 'MyPassword!',
-       'HOST': 'localhost',
-       'PORT': '5432',
+if TESTING:
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lovelili_db',
+        'USER': 'rowele',
+        'PASSWORD': 'MyPassword!',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        }
     }
-}
-"""
+
 
 
 
@@ -164,7 +166,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://www.lovelili-1.onrender.com"
 ]
 # Media files (User uploaded content)
-MEDIA_URL = '/media/'
+MEDIA_URL = 'https://lovelili-media.onrender.com/media/'  # Render static site URL
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 

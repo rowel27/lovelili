@@ -18,8 +18,8 @@ const ProductCard = ({ product }) => {
         <div className={`product-image-wrapper ${product.is_sold ? "sold" : ""}`}>
           <img
             className="product-image"
-            src={product.image || "https://via.placeholder.com/500x500?text=No+Image"}
-            alt={product.name ||product || product.title}
+            src={product.image_url || "https://via.placeholder.com/500x500?text=No+Image"}
+            alt={product.name || product.title}
           />
           {product.is_sold && <div className="sold-badge">Sold</div>}
           
