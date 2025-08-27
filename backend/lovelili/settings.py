@@ -28,7 +28,7 @@ SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default = False)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0','www.lovelili.onrender.com', 'lovelili.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46','www.lovelili.onrender.com', 'lovelili.onrender.com']
   # Allow all hosts for development
 RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_HOSTNAME:
@@ -62,7 +62,6 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",  # after SecurityMiddleware
-    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -128,8 +127,8 @@ CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://192.168.4.46:3000",
-    "https://lovelili.onrender.com",
-    "https://www.lovelili.onrender.com",  # Network access
+    "https://lovelili-1.onrender.com",
+    "https://www.lovelili-1.onrender.com",  # Network access
 ]
 
 
@@ -160,7 +159,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://lovelili.onrender.com"
+    "https://lovelili-1.onrender.com",
+    "https://www.lovelili-1.onrender.com"
 ]
 # Media files (User uploaded content)
 MEDIA_URL = '/media/'
