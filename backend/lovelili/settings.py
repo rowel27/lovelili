@@ -124,12 +124,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://192.168.4.46:3000",
-    "https://lovelili-1.onrender.com",
-    "https://www.lovelili-1.onrender.com",  # Network access
+    "https://lovelili.onrender.com",
+    "https://www.lovelili.onrender.com",  # Network access
 ]
 
 
@@ -160,7 +160,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://lovelili-1.onrender.com"
+    "https://lovelili.onrender.com"
 ]
 # Media files (User uploaded content)
 MEDIA_URL = '/media/'
@@ -170,7 +170,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 
-SITE_URL = 'https://lovelili-1.onrender.com'
+SITE_URL = 'https://lovelili.onrender.com'
 
 STRIPE_PUBLIC_KEY = 'pk_test_51S0F6LH2TzfL3ek64Zu0Jb9g8oSMRPc7I494K9WIwuMRnjBw66xb7V2GFb9ciXIMUwbtQHGzVklDHviPSOnJgbQl00o55Vdcgm'
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY_TEST', default="secret")
