@@ -28,7 +28,7 @@ SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default = False)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0','https://www.lovelili.onrender.com', 'https://lovelili.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0','www.lovelili.onrender.com', 'lovelili.onrender.com']
   # Allow all hosts for development
 RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_HOSTNAME:
@@ -128,6 +128,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # React dev server
     "http://192.168.4.46:3000",
+    "https://lovelili-1.onrender.com",
+    "https://wwwlovelili-1.onrender.com"
     "https://lovelili.onrender.com",
     "https://www.lovelili.onrender.com"  # Network access
 ]
