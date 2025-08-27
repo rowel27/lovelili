@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { apiService } from '../services/api';
 import ProductCard from '../components/ProductCard';
-import defaultImage from '../assets/IMG_7717.PNG'
+import defaultImage from '../assets/allProducts.jpeg'
 import './ProductFeed.css';
 
 const ProductFeed = ({ showFilters = false }) => {
