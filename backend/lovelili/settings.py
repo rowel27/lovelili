@@ -28,7 +28,7 @@ SECRET_KEY = env("SECRET_KEY", default="insecure-secret")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default = False)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.4.46', '0.0.0.0','lovelili.onrender.com']
   # Allow all hosts for development
 RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_HOSTNAME:

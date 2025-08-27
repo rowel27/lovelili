@@ -8,8 +8,16 @@ const api = axios.create({
     'Content-Type': 'application/json',
   },
 });
-
+useEffect(() => {
+  apiService.getProducts()
+    .then(res => {
+      console.log("Fetched products:", res.data);
+      setProducts(res.data);
+    })
+    .catch(err => console.error("Error fetching products:", err));
+}, []);
 export const apiService = {
+  
   // Drops
   getDrops: () => api.get('/drops/'),
   getCurrentDrop: () => api.get('/drops/current/'),
