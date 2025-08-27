@@ -9,6 +9,7 @@ const api = axios.create({
   },
 });
 
+
 export const apiService = {
   // Update all these paths to include /api/
   getDrops: () => api.get('/api/drops/'),
