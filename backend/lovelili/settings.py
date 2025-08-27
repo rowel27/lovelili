@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'lovelili.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-"""
+
 DATABASES = {
    'default': {
        'ENGINE': 'django.db.backends.postgresql',
@@ -102,7 +102,7 @@ DATABASES = {
        'PORT': '5432',
     }
 }
-"""
+
 
 
 # Password validation
@@ -165,6 +165,7 @@ CSRF_TRUSTED_ORIGINS = [
 # Media files (User uploaded content)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
