@@ -10,7 +10,7 @@ router.register(r'categories', CategoryViewSet)
 router.register(r'products', ProductViewSet)
 
 urlpatterns = [
-    path('api/', include(router.urls)),
+    path('', include(router.urls)),
     path('stripe/webhook/', stripe_webhook, name='stripe-webhook'),
     path("create-checkout-session/", views.create_checkout_session, name="checkout_session"),
     path('api/cart/', views.get_cart, name='get_cart'),
