@@ -270,7 +270,7 @@ class DropViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = DropSerializer
     
     @action(detail=False, methods=['get'])
-    def current(self):
+    def current(self, request):
         """Get the current live drop"""
         current_drop = Drop.objects.filter(is_live=True).first()
         if current_drop:
