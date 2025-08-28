@@ -23,7 +23,7 @@
 
 @media (max-width: 700px) {
   .product-feed-grid {
-    grid-template-columns: 1fr; /* single column for small screens */
+    grid-template-columns: repeat(2,1fr); 
     gap: 20px;
   }
 }
@@ -159,10 +159,10 @@
 }
 
 /* smaller sold button only on mobile */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .sold-button {
-    padding: 4px 10px;
-    font-size: 12px;
+    padding: 1px 3px;
+    font-size: 8px;
   }
 }
 
