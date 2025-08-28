@@ -66,7 +66,7 @@ def create_checkout_session(request):
             payment_method_types=["card"],
             line_items=line_items,
             mode="payment",
-            shipping_address_collection={"allowed_countries": ["US", "CA", "GB", "AU", "FR"]},
+            shipping_address_collection={"allowed_countries": },
             shipping_options=[
                 {
                     "shipping_rate_data": {
@@ -84,6 +84,7 @@ def create_checkout_session(request):
                 }
             ],
             metadata={"product_ids": ",".join(product_ids)},
+            automatic_tax={"enabled": True}, 
             success_url="https://lovelili-1.onrender.com/success",
             cancel_url="https://lovelili-1.onrender.com/cancel",
         )
