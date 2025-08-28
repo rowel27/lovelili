@@ -8,7 +8,7 @@ const CancelPage = () => {
   useEffect(() => {
     if (cart.length > 0) {
       const productIds = cart.map(item => item.id); // frontend product IDs
-      fetch("http://localhost:8000/api/cancel-reservation/", {
+      fetch("https://lovelili-1.onrender.com/api/cancel-reservation/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ product_ids: productIds }),
