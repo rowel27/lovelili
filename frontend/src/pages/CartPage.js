@@ -16,7 +16,7 @@ const handleCheckout = async () => {
   if (cart.length === 0) return alert("Your cart is empty!");
 
   try {
-    const response = await fetch("https://lovelili-1.onrender.com/create-checkout-session/", {
+    const response = await fetch("https://lovelili.onrender.com/create-checkout-session/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ cart }),
