@@ -3,6 +3,7 @@ import HeroSection from '../components/HeroSection'; // Assuming you have a Cart
 import leftImage from '../assets/IMG_7716.jpg'
 import rightImage from '../assets/IMG_9310.jpg'
 import videoSource from '../assets/lovelili.MOV'
+import newArrivals from '../assets/IMG_7819.PNG'
 // You'll need to create or import a DropsFeed component, or modify this based on how you want to display drops
 
 const Home = () => {
@@ -48,7 +49,11 @@ const Home = () => {
 
       {/* Drops section */}
       <div className="drops-section">
-        <h2>New Arrivals</h2>
+      <img 
+          src={newArrivals}
+          alt="Right" 
+          style={{ width: '100%', objectFit: 'left' }} 
+        />
         {/* Add your drops content here - you might need a DropsFeed component */}
       </div>
     </div>
