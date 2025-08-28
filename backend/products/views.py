@@ -72,7 +72,7 @@ def create_checkout_session(request):
                     "shipping_rate_data": {
                         "display_name": "US Shipping",
                         "type": "fixed_amount",
-                        "fixed_amount": {"amount": 100, "currency": "usd"},
+                        "fixed_amount": {"amount": 500, "currency": "usd"},
                     }
                 },
                 {
