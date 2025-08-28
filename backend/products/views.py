@@ -66,7 +66,7 @@ def create_checkout_session(request):
             payment_method_types=["card"],
             line_items=line_items,
             mode="payment",
-            shipping_address_collection={"allowed_countries": },
+            shipping_address_collection={},
             shipping_options=[
                 {
                     "shipping_rate_data": {
