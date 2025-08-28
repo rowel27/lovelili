@@ -42,8 +42,8 @@ if RENDER_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_HOSTNAME)
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://lovelili77.com",
-    "https://www.lovelili77.com"
+    "https://lovelili-1.onrender.com",
+    "https://www.lovelili77-1.onrender.com"
 ]
 
 # ----------------------------
@@ -124,6 +124,8 @@ CORS_ALLOWED_ORIGINS = [
     "https://www.lovelili77.com",
     "https://lovelili.onrender.com",
     "https://www.lovelili.onrender.com",
+    "https://lovelili-1.onrender.com",
+    "https://www.lovelili-1.onrender.com",
 
 ]
 
@@ -162,7 +164,7 @@ STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY', default='pk_test_placeholder')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY', default='sk_test_placeholder')
 STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET', default='whsec_placeholder')
 # This should point to your React app
-FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://lovelili77.com')
+FRONTEND_URL = os.getenv('FRONTEND_URL', 'https://lovelili-1.onrender.com')
 
 # ----------------------------
 # SESSION SETTINGS
