@@ -122,6 +122,9 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.4.46:3000",
     "https://lovelili-1.onrender.com",
     "https://www.lovelili-1.onrender.com",
+    "https://lovelili.onrender.com",
+    "https://www.lovelili.onrender.com",
+
 ]
 
 # ----------------------------
