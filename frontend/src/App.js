@@ -13,9 +13,12 @@ import CartPage from './pages/CartPage';
 import ScrollToTop from './services/ScrollToTop';
 import SuccessPage from './pages/SuccessPage';
 import CancelPage from './pages/CancelPage';
+import DebugPage from './pages/DebugPage';
 
 
 function App() {
+  console.log('App component rendered');
+  
   return (
     <Router>
       <ScrollToTop />
@@ -34,6 +37,10 @@ function App() {
               <Route path="/products/drop/:dropId" element={<ProductFeed/>} />
               <Route path="/success" element={<SuccessPage />} />
               <Route path="/cancel" element={<CancelPage />} />
+              <Route path="/test-success" element={<div>Test Success Page - If you see this, routing is working!</div>} />
+              <Route path="/test-cancel" element={<div>Test Cancel Page - If you see this, routing is working!</div>} />
+              <Route path="/debug" element={<DebugPage />} />
+              <Route path="/simple-test" element={<div style={{padding: '50px', textAlign: 'center'}}><h1>Simple Test Page</h1><p>If you can see this, routing is working!</p></div>} />
             </Routes>
           </main>
           <Footer />

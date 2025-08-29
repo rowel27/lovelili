@@ -6,7 +6,10 @@ const SuccessPage = () => {
     const { clearCart } = useCart();
 
     useEffect(() => {
+        console.log('SuccessPage component mounted');
+        // Clear the cart when payment is successful
         clearCart();
+        console.log('Payment successful - cart cleared');
     }, [clearCart]);
     
     

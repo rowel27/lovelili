@@ -6,15 +6,33 @@ const CancelPage = () => {
   const { cart, clearCart } = useCart();
 
   useEffect(() => {
+    console.log('CancelPage component mounted');
+    console.log('CancelPage mounted, cart length:', cart.length);
     if (cart.length > 0) {
       const productIds = cart.map(item => item.id); // frontend product IDs
+      console.log('Canceling reservation for products:', productIds);
       fetch("https://lovelili.onrender.com/api/cancel-reservation/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ product_ids: productIds }),
-      }).then(() => {
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to cancel reservation');
+        }
+        return response.json();
+      })
+      .then(() => {
         clearCart(); // also clear the frontend cart
+      })
+      .catch(error => {
+        console.error('Error canceling reservation:', error);
+        // Still clear the cart even if the API call fails
+        clearCart();
       });
+    } else {
+      // If cart is empty, just clear it
+      clearCart();
     }
   }, [cart, clearCart]);
 

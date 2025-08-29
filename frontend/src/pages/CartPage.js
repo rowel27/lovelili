@@ -15,6 +15,9 @@ const CartPage = () => {
 const handleCheckout = async () => {
   if (cart.length === 0) return alert("Your cart is empty!");
 
+  console.log('Starting checkout process...');
+  console.log('Cart items:', cart);
+
   try {
     const response = await fetch("https://lovelili.onrender.com/api/create-checkout-session/", {
       method: "POST",
@@ -22,15 +25,19 @@ const handleCheckout = async () => {
       body: JSON.stringify({ cart }),
     });
 
+    console.log('Checkout response status:', response.status);
     const data = await response.json();
+    console.log('Checkout response data:', data);
 
     if (data.url) {
+      console.log('Redirecting to Stripe checkout:', data.url);
       window.location.href = data.url; // redirect to Stripe checkout
     } else {
+      console.error('Checkout error:', data.error);
       alert("Error: " + data.error);
     }
   } catch (err) {
-    console.error(err);
+    console.error('Checkout failed:', err);
     alert("Failed to initiate checkout");
   }
 };
