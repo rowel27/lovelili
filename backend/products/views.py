@@ -20,8 +20,6 @@ from django.utils.decorators import method_decorator
 from django.views.decorators.http import require_http_methods
 from rest_framework import generics
 from rest_framework.decorators import api_view
-from .webhook import stripe_webhook
-
 
 
 
@@ -62,6 +60,12 @@ def create_checkout_session(request):
                 "quantity": 1,
             })
 
+        success_url = "https://lovelili77.com/success"
+        cancel_url = "https://lovelili77.com/cancel"
+        
+        print(f"Creating checkout session with success_url: {success_url}")
+        print(f"Creating checkout session with cancel_url: {cancel_url}")
+        
         session = stripe.checkout.Session.create(
             payment_method_types=["card"],
             line_items=line_items,
@@ -85,10 +89,11 @@ def create_checkout_session(request):
             ],
             metadata={"product_ids": ",".join(product_ids)},
             automatic_tax={"enabled": True}, 
-            success_url="https://lovelili-1.onrender.com/success",
-            cancel_url="https://lovelili-1.onrender.com/cancel",
+            success_url=success_url,
+            cancel_url=cancel_url,
         )
 
+        print(f"Checkout session created successfully: {session.url}")
         return JsonResponse({"url": session.url})
 
     except Product.DoesNotExist:
@@ -111,6 +116,8 @@ def stripe_webhook(request):
     except stripe.error.SignatureVerificationError:
         return JsonResponse({"error": "Invalid signature"}, status=400)
 
+    print(f"Webhook event received: {event['type']}")
+    
     # Payment successful
     if event["type"] == "checkout.session.completed":
         session = event["data"]["object"]
@@ -142,9 +149,27 @@ def stripe_webhook(request):
             except Product.DoesNotExist:
                 continue
 
+    # Payment canceled by user
+    elif event["type"] == "checkout.session.canceled":
+        print("Processing checkout.session.canceled event")
+        session = event["data"]["object"]
+        product_ids = session["metadata"]["product_ids"].split(",")
+        for pid in product_ids:
+            try:
+                product = Product.objects.get(id=pid)
+                product.is_reserved = False
+                product.save()
+            except Product.DoesNotExist:
+                continue
+
     return JsonResponse({"status": "success"})
 
 
+
+@api_view(['GET'])
+def test_endpoint(request):
+    """Test endpoint to verify backend is working"""
+    return JsonResponse({"status": "success", "message": "Backend is working!"})
 
 @api_view(['GET'])
 def current_drop(request):
@@ -256,14 +281,18 @@ def cancel_reservation(request):
     Unreserve products in the cart when payment is canceled.
     Expects JSON: {"product_ids": [1, 2, 3]}
     """
+    print("Cancel reservation endpoint called")
     data = json.loads(request.body)
     product_ids = data.get("product_ids", [])
+    print(f"Product IDs to unreserve: {product_ids}")
 
     if not product_ids:
         return JsonResponse({"error": "No product IDs provided"}, status=400)
 
     products = Product.objects.filter(id__in=product_ids)
+    print(f"Found {products.count()} products to unreserve")
     products.update(is_reserved=False)
+    print("Products unreserved successfully")
 
     return JsonResponse({"success": True, "message": "Products unreserved"})
 
